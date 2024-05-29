@@ -1,0 +1,26 @@
+local player = game.Players.LocalPlayer
+local userInputService = game:GetService("UserInputService")
+local jumping = false
+local defaultwalkspeed = player.Character.Humanoid.WalkSpeed
+local defwalkspeed = defaultwalkspeed
+
+userInputService.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.Space then
+        jumping = true
+    end
+end)
+
+userInputService.InputEnded:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.Space then
+        jumping = false
+        player.Character.Humanoid.WalkSpeed = defwalkspeed
+    end
+end)
+
+while true do
+    if jumping then
+        player.Character.Humanoid.Jump = true -- Прыжок
+        player.Character.Humanoid.WalkSpeed = 40
+    end
+    wait(0.3)
+end
