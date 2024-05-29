@@ -1,0 +1,36 @@
+local isEnabled
+local player = game.Players.LocalPlayer
+local userInputService = game:GetService("UserInputService")
+local jumping = false
+local defaultwalkspeed = player.Character.Humanoid.WalkSpeed
+local defwalkspeed = defaultwalkspeed
+local targetspeed = 40
+local speedIncrement = 7.5 -- Значение, на которое будет увеличиваться скорость с каждой итерацией
+
+userInputService.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.Space then
+        jumping = true
+       end
+    end
+end)
+
+userInputService.InputEnded:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.Space then
+        jumping = false
+        player.Character.Humanoid.WalkSpeed = defwalkspeed
+       end
+    end
+end)
+
+while true do
+    if isEnabled == true then
+        if jumping then
+             player.Character.Humanoid.Jump = true -- Прыжок
+            local currentSpeed = player.Character.Humanoid.WalkSpeed
+            if currentSpeed < targetspeed then
+                player.Character.Humanoid.WalkSpeed = math.min(currentSpeed + speedIncrement, targetspeed)
+            end
+        end
+            wait(0.3)
+    end
+end
